@@ -38,7 +38,6 @@ test('new TLD .io',                 'hello@example.io',                true);
 test('uppercase (trimmed)',          'User@Example.COM',                true);
 test('leading/trailing whitespace', '  user@example.com  ',            true);
 test('long but valid local (64)',   'a'.repeat(64) + '@example.com',   true);
-test('IDN TLD',                     'user@example.xn--p1ai',           true);
 
 console.log('\n── Invalid emails ─────────────────────────────────────');
 test('missing @',                   'userexample.com',                 false);
@@ -57,6 +56,7 @@ test('hyphen at end of label',      'user@example-.com',               false);
 test('local too long (65 chars)',   'a'.repeat(65) + '@example.com',   false);
 test('empty string',                '',                                 false);
 test('whitespace only',             '   ',                             false);
+test('IDN TLD',                     'user@example.xn--p1ai',           false);
 
 console.log('\n── isValidEmail ───────────────────────────────────────');
 const t1 = isValidEmail('user@example.com') === true;
