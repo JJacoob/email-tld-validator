@@ -1,0 +1,34 @@
+{
+  "name": "email-tld-validator",
+  "version": "1.0.0",
+  "description": "Lightweight email validator with IANA TLD whitelist — auto-updated via GitHub Actions",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "react-native": "./dist/index.native.js",
+  "exports": {
+    ".": {
+      "react-native": "./dist/index.native.js",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "data/tlds.json"
+  ],
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs",
+    "test": "node --experimental-vm-modules test/index.test.mjs",
+    "update-tlds": "node scripts/update-tlds.mjs"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "6.1.0",
+    "rollup": "4.62.0"
+  },
+  "keywords": ["email", "validator", "tld", "iana", "react-native"],
+  "sideEffects": false
+}

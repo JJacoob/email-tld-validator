@@ -1,0 +1,73 @@
+name: Update TLDs
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  update-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify package integrity
+        run: npm audit signatures
+
+      - name: Fetch latest TLDs from IANA
+        run: node scripts/update-tlds.mjs
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet data/tlds.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Run tests
+        if: steps.diff.outputs.changed == 'true'
+        run: npm test
+
+      - name: Bump patch version
+        if: steps.diff.outputs.changed == 'true'
+        run: npm version patch --no-git-tag-version
+
+      - name: Commit updated TLDs and version
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/tlds.json dist/ package.json package-lock.json
+          git commit -m "chore: update IANA TLD list $(date -u +'%Y-%m-%d')"
+          git push
+
+      - name: Publish to npm
+        if: steps.diff.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: No changes
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "TLD list is already up to date. Skipping build and publish."
