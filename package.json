@@ -1,6 +1,6 @@
 {
   "name": "email-tld-validator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Lightweight email validator with IANA TLD whitelist — auto-updated via GitHub Actions",
   "license": "MIT",
   "type": "module",
