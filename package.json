@@ -39,6 +39,14 @@
     "@rollup/plugin-json": "6.1.0",
     "rollup": "4.62.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJacoob/email-tld-validator.git"
+  },
+  "homepage": "https://github.com/JJacoob/email-tld-validator#readme",
+  "bugs": {
+    "url": "https://github.com/JJacoob/email-tld-validator/issues"
+  },
   "keywords": ["email", "validator", "tld", "iana", "react-native"],
   "sideEffects": false
 }
