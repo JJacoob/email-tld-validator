@@ -9,9 +9,18 @@
   "react-native": "./dist/index.native.js",
   "exports": {
     ".": {
-      "react-native": "./dist/index.native.js",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
+      "react-native": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.native.js"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
       "default": "./dist/index.cjs"
     }
   },
@@ -21,7 +30,8 @@
     "data/tlds.json"
   ],
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "rollup -c rollup.config.mjs && npm run build:types",
+    "build:types": "node -e \"require('fs').copyFileSync('src/index.d.ts','dist/index.d.ts')\"",
     "test": "node --experimental-vm-modules test/index.test.mjs",
     "update-tlds": "node scripts/update-tlds.mjs"
   },
@@ -29,12 +39,6 @@
     "@rollup/plugin-json": "6.1.0",
     "rollup": "4.62.0"
   },
-  "keywords": [
-    "email",
-    "validator",
-    "tld",
-    "iana",
-    "react-native"
-  ],
+  "keywords": ["email", "validator", "tld", "iana", "react-native"],
   "sideEffects": false
 }
