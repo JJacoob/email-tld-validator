@@ -1,6 +1,6 @@
 {
   "name": "email-tld-validator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lightweight email validator with IANA TLD whitelist — auto-updated via GitHub Actions",
   "license": "MIT",
   "type": "module",
@@ -47,6 +47,12 @@
   "bugs": {
     "url": "https://github.com/JJacoob/email-tld-validator/issues"
   },
-  "keywords": ["email", "validator", "tld", "iana", "react-native"],
+  "keywords": [
+    "email",
+    "validator",
+    "tld",
+    "iana",
+    "react-native"
+  ],
   "sideEffects": false
 }

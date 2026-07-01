@@ -1,7 +1,7 @@
 'use strict';
 
 var source = "IANA Root Zone Database";
-var updatedAt = "2026-06-14";
+var updatedAt = "2026-07-01";
 var count = 1285;
 var tlds = [
 	"aaa",
